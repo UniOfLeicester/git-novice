@@ -2,12 +2,14 @@ git-novice
 ==========
 
 An introduction to version control for novices using Git.
-Please see <https://swcarpentry.github.io/git-novice/> for a rendered version of this material,
+Please see <https://uniofleicester.github.io/git-novice/> for a rendered version of this material,
 [the lesson template documentation][lesson-example]
 for instructions on formatting, building, and submitting material,
 or run `make` in this directory for a list of helpful commands.
 
-Maintainers:
+Lesson slides for University of Leicester slides can be found in the root directory (Git-Novice.{pdf/pptx})
+
+Maintainers of the original SWC lesson:
 
 * [Ivan Gonzalez][gonzalez_ivan]: [@iglpdc](https://github.com/iglpdc)
 * [Daisie Huang][huang_daisie]: [@daisieh](https://github.com/daisieh)
@@ -20,3 +22,4 @@ Maintainers:
 [koziar_kat]: https://software-carpentry.org/team/#koziar_kat
 [lesson-example]: https://swcarpentry.github.io/lesson-example
 
+Modifications and lesson slides by Sam Cox [@spco](https://github.com/spco)
