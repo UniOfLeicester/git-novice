@@ -1,6 +1,7 @@
 ---
 layout: lesson
-root: .
+root: .  # Is the only page that doesn't follow the pattern /:path/index.html
+permalink: index.html  # Is the only page that doesn't follow the pattern /:path/index.html
 ---
 
 Wolfman and Dracula have been hired by Universal Missions (a space
@@ -12,7 +13,7 @@ spend a lot of time waiting for the other to finish, but if they work
 on their own copies and email changes back and forth things will be
 lost, overwritten, or duplicated.
 
-A colleague suggests using [version control]({{ page.root }}/reference/#version-control) to
+A colleague suggests using [version control]({{ page.root }}{% link reference.md %}#version-control) to
 manage their work. Version control is better than mailing files back and forth:
 
 *   Nothing that is committed to version control is ever lost, unless
@@ -47,8 +48,9 @@ to be shared can and should be stored in a version control system.
 > ## Prerequisites
 >
 > In this lesson we use Git from the Unix Shell.
-> Some previous experience with the shell is expected.
-> It is recommended that participants use Spectre, but
-> can use their own laptop if they have installed git
+> Some previous experience with the shell is expected,
+> *but isn't mandatory*.
+> It is recommended that participants use SPECTRE, but
+> can use their own computer if they have installed git
 > as required.
 {: .prereq}

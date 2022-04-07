@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Setup
-permalink: /setup/
 ---
 
 Please see [this section of the workshop template][workshop-setup]
@@ -15,6 +14,6 @@ $ module load git
 $ mkdir git-novice
 $ cd git-novice
 ~~~
-{: .bash}
+{: .language-bash}
 
-[workshop-setup]: https://swcarpentry.github.io/workshop-template/#git
+[workshop-setup]: https://carpentries.github.io/workshop-template/#git
