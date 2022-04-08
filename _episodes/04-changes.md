@@ -85,7 +85,6 @@ No commits yet
 
 Untracked files:
    (use "git add <file>..." to include in what will be committed)
-
 	mars.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
@@ -115,9 +114,7 @@ No commits yet
 
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-
 	new file:   mars.txt
-
 ~~~
 {: .output}
 
@@ -163,7 +160,7 @@ $ git status
 
 ~~~
 On branch main
-nothing to commit, working directory clean
+nothing to commit, working tree clean
 ~~~
 {: .output}
 
@@ -231,8 +228,7 @@ $ git status
 On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
+  (use "git restore <file>..." to discard changes in working directory)
 	modified:   mars.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
@@ -293,8 +289,7 @@ $ git commit -m "Add concerns about effects of Mars' moons on Wolfman"
 On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
+  (use "git restore <file>..." to discard changes in working directory)
 	modified:   mars.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
@@ -453,7 +448,7 @@ $ git status
 
 ~~~
 On branch main
-nothing to commit, working directory clean
+nothing to commit, working tree clean
 ~~~
 {: .output}
 
@@ -579,7 +574,7 @@ Date:   Thu Aug 22 09:51:46 2013 -0400
 >    Note, our newly created empty directory `spaceships` does not appear in
 >    the list of untracked files even if we explicitly add it (_via_ `git add`) to our
 >    repository. This is the reason why you will sometimes see `.gitkeep` files
->    in otherwise empty directories. Unlike `.gitignore`, these files are not special
+>    in otherwise empty directories. Unlike `.gitignore` (which we will explore later), these files are not special
 >    and their sole purpose is to populate a directory so that Git adds it to
 >    the repository. In fact, you can name such files anything you like.
 >
