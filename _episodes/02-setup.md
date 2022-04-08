@@ -113,7 +113,7 @@ $ git config --global init.defaultBranch main
 
 > ## Default Git branch naming
 >
-> Source file changes are associated with a "branch."
+> Source file changes are associated with a "branch".
 > For new learners in this lesson, it's enough to know that branches exist, and this lesson uses one branch.
 > By default, Git will create a branch called `master`
 > when you create a new repository with `git init` (as explained in the next Episode). This term evokes
