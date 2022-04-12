@@ -72,14 +72,9 @@ of git.
 See the [setup episode](02-setup.md) for more information on this change.
 
 ~~~
-git checkout -b main
+git branch -m main
 ~~~
 {: .language-bash}
-~~~
-Switched to a new branch 'main'
-~~~
-{: .output}
-
 
 We can check that everything is set up correctly
 by asking Git to tell us the status of our project:
