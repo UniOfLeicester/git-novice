@@ -84,8 +84,8 @@ On branch main
 No commits yet
 
 Untracked files:
-   (use "git add <file>..." to include in what will be committed)
-	mars.txt
+  (use "git add <file>..." to include in what will be committed)
+        mars.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
 ~~~
@@ -114,7 +114,7 @@ No commits yet
 
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-	new file:   mars.txt
+        new file:   mars.txt
 ~~~
 {: .output}
 
@@ -229,7 +229,7 @@ On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   mars.txt
+        modified:   mars.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
@@ -290,7 +290,7 @@ On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   mars.txt
+        modified:   mars.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
