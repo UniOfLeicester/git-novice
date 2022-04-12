@@ -13,22 +13,22 @@ objectives:
 - "Restore old versions of files."
 keypoints:
 - "`git diff` displays differences between commits."
-- "`git checkout` recovers old versions of files."
+- "`git checkout` and `git restore` recover old versions of files."
 ---
 
-As we saw in the previous lesson, we can refer to commits by their
+As we saw in the previous episode, we can refer to commits by their
 identifiers.  You can refer to the _most recent commit_ of the working
 directory by using the identifier `HEAD`.
 
 We've been adding one line at a time to `mars.txt`, so it's easy to track our
 progress by looking, so let's do that using our `HEAD`s.  Before we start,
-let's make a change to `mars.txt`.
+let's make a change to `mars.txt`, adding yet another line.
 
 ~~~
 $ nano mars.txt
 $ cat mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 Cold and dry, but everything is my favorite color
@@ -43,7 +43,7 @@ Now, let's see what we get.
 ~~~
 $ git diff HEAD mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 diff --git a/mars.txt b/mars.txt
@@ -60,21 +60,24 @@ index b36abfd..0848c8d 100644
 
 which is the same as what you would get if you leave out `HEAD` (try it).  The
 real goodness in all this is when you can refer to previous commits.  We do
-that by adding `~1` to refer to the commit one before `HEAD`.
+that by adding `~1`
+(where "~" is "tilde", pronounced [**til**-d*uh*])
+to refer to the commit one before `HEAD`.
+You can also pronounce `HEAD~1` as "head **minus** one".
 
 ~~~
 $ git diff HEAD~1 mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 If we want to see the differences between older commits we can use `git diff`
 again, but with the notation `HEAD~1`, `HEAD~2`, and so on, to refer to them:
 
 
 ~~~
-$ git diff HEAD~2 mars.txt
+$ git diff HEAD~3 mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 diff --git a/mars.txt b/mars.txt
@@ -89,17 +92,19 @@ index df0654a..b36abfd 100644
 ~~~
 {: .output}
 
-We could also use `git show` which shows us what changes we made at an older commit as well as the commit message, rather than the _differences_ between a commit and our working directory that we see by using `git diff`.
+We could also use `git show` which shows us what changes we made at an older commit as
+well as the commit message, rather than the _differences_ between a commit and our
+working directory that we see by using `git diff`.
 
 ~~~
-$ git show HEAD~2 mars.txt
+$ git show HEAD~3 mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
-commit 34961b159c27df3b475cfe4415d94a6d1fcd064d
+commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
 Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 10:07:21 2013 -0400
+Date:   Thu Aug 22 09:51:46 2013 -0400
 
     Start notes on Mars as a base
 
@@ -117,7 +122,7 @@ In this way,
 we can build up a chain of commits.
 The most recent end of the chain is referred to as `HEAD`;
 we can refer to previous commits using the `~` notation,
-so `HEAD~1` (pronounced "head minus one")
+so `HEAD~1`
 means "the previous commit",
 while `HEAD~123` goes back 123 commits from where we are now.
 
@@ -135,7 +140,7 @@ so let's try this:
 ~~~
 $ git diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 diff --git a/mars.txt b/mars.txt
@@ -152,12 +157,12 @@ index df0654a..93a3e13 100644
 
 That's the right answer,
 but typing out random 40-character strings is annoying,
-so Git lets us use just the first few characters:
+so Git lets us use just the first few characters (typically seven for normal size projects):
 
 ~~~
 $ git diff f22b25e mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 diff --git a/mars.txt b/mars.txt
@@ -173,20 +178,10 @@ index df0654a..93a3e13 100644
 {: .output}
 
 All right! So
-we can save changes to files and see what we've changed—now how
+we can save changes to files and see what we've changed. Now, how
 can we restore older versions of things?
-Let's suppose we accidentally overwrite our file:
-
-~~~
-$ nano mars.txt
-$ cat mars.txt
-~~~
-{: .bash}
-
-~~~
-We will need to manufacture our own oxygen
-~~~
-{: .output}
+Let's suppose we change our mind about the last update to
+`mars.txt` (the "ill-considered change").
 
 `git status` now tells us that the file has been changed,
 but those changes haven't been staged:
@@ -194,28 +189,35 @@ but those changes haven't been staged:
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
-On branch master
+On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	modified:   mars.txt
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   mars.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
 {: .output}
 
 We can put things back the way they were
-by using `git checkout`:
+by using `git checkout` or `git restore`:
 
 ~~~
 $ git checkout HEAD mars.txt
 $ cat mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
+
+Or:
+
+~~~
+$ git restore mars.txt
+$ cat mars.txt
+~~~
+{: .language-bash}
 
 ~~~
 Cold and dry, but everything is my favorite color
@@ -235,12 +237,12 @@ we can use a commit identifier instead:
 ~~~
 $ git checkout f22b25e mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 $ cat mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 Cold and dry, but everything is my favorite color
@@ -250,30 +252,36 @@ Cold and dry, but everything is my favorite color
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
-# On branch master
+On branch main
 Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	modified:   mars.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+  (use "git restore --staged <file>..." to unstage)
+        modified:   mars.txt
 ~~~
 {: .output}
 
-Notice that the changes are on the staged area.
+Notice that the changes are currently in the staging area.
 Again, we can put things back the way they were
-by using `git checkout`:
+by using `git checkout` or `git restore` with the `--staged` and `--worktree` options:
 
 ~~~
 $ git checkout HEAD mars.txt
 ~~~
-{: .bash}
+{: .language-bash}
+
+Or:
+
+~~~
+$ git restore --staged --worktree mars.txt
+~~~
+{: .language-bash}
+
+Note that if we used only the `--staged` option, the changes would have been
+unstaged but they would still be in our working directory.
+We would then had to use a `git restore mars.txt` to restore the file
+to its state in the last commit.
 
 > ## Don't Lose Your HEAD
 >
@@ -282,21 +290,50 @@ $ git checkout HEAD mars.txt
 > ~~~
 > $ git checkout f22b25e mars.txt
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
-> to revert `mars.txt` to its state after the commit `f22b25e`. But be careful! 
+> to revert `mars.txt` to its state after the commit `f22b25e`. But be careful!
 > The command `checkout` has other important functionalities and Git will misunderstand
-> your intentions if you are not accurate with the typing. For example, 
-> if you forget `mars.txt` in that command, Git will tell you that "You are in
-> 'detached HEAD' state." In this state, you shouldn't make any changes.
-> You can fix this by reattaching your head using ``git checkout master``
+> your intentions if you are not accurate with the typing. For example,
+> if you forget `mars.txt` in the previous command.
+>
+> ~~~
+> $ git checkout f22b25e
+> ~~~
+> {: .language-bash}
+> ~~~
+> Note: switching to 'f22b25e'.
+>
+> You are in 'detached HEAD' state. You can look around, make experimental
+> changes and commit them, and you can discard any commits you make in this
+> state without impacting any branches by switching back to a branch.
+>
+> If you want to create a new branch to retain commits you create, you may
+> do so (now or later) by using -c with the switch command. Example:
+>
+>   git switch -c <new-branch-name>
+>
+> Or undo this operation with:
+>
+>   git switch -
+>
+> Turn off this advice by setting config variable advice.detachedHead to false
+>
+> HEAD is now at f22b25e Start notes on Mars as a base
+> ~~~
+> {: .error}
+>
+> The "detached HEAD" is like "look, but don't touch" here,
+> so you shouldn't make any changes in this state.
+> After investigating your repo's past state, reattach your `HEAD` with `git checkout main`
+> or `git switch main`.
 {: .callout}
 
 It's important to remember that
 we must use the commit number that identifies the state of the repository
 *before* the change we're trying to undo.
 A common mistake is to use the number of
-the commit in which we made the change we're trying to get rid of.
+the commit in which we made the change we're trying to discard.
 In the example below, we want to retrieve the state from before the most
 recent commit (`HEAD~1`), which is commit `f22b25e`:
 
@@ -313,16 +350,13 @@ here's how Git works in cartoon form:
 > you'll see that it includes this hint:
 >
 > ~~~
-> (use "git checkout -- <file>..." to discard changes in working directory)
+> (use "git restore <file>..." to discard changes in working directory)
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
 > As it says,
-> `git checkout` without a version identifier restores files to the state saved in `HEAD`.
-> The double dash `--` is needed to separate the names of the files being recovered
-> from the command itself:
-> without it,
-> Git would try to use the name of the file as the commit identifier.
+> `git restore` restores files to the state saved in `HEAD`
+> and is the preferred method as of Git 2.23.
 {: .callout}
 
 The fact that files can be reverted one by one
@@ -352,22 +386,48 @@ moving backward and forward in time becomes much easier.
 >
 > 4. `$ git checkout <unique ID of last commit> data_cruncher.py`
 >
-> 5. Both 2 and 4
+> 5. `$ git restore --staged --worktree data_cruncher.py`
+>
+> 6. 2, 4 and 5
+>
+>
+> > ## Solution
+> >
+> > The answer is (6) -- 2, 4 and 5.
+> >
+> > The `checkout` command restores files from the repository, overwriting the files in your working
+> > directory. Answers 2, 4 and 5 restore the *latest* version *in the repository* of the file
+> > `data_cruncher.py`. Answer 2 uses `HEAD` to indicate the *latest*, whereas answer 4 uses the
+> > unique ID of the last commit, which is what `HEAD` means.
+> >
+> > Answer 3 gets the version of `data_cruncher.py` from the commit *before* `HEAD`, which is NOT
+> > what we wanted.
+> >
+> > Answer 1 can be dangerous! Without a filename, `git checkout` will restore **all files**
+> > in the current directory (and all directories below it) to their state at the commit specified.
+> > This command will restore `data_cruncher.py` to the latest commit version, but it will also
+> > restore *any other files that are changed* to that version, erasing any changes you may
+> > have made to those files!
+> > As discussed above, you are left in a *detached* `HEAD` state, and you don't want to be there.
+> {: .solution}
 {: .challenge}
 
 > ## Reverting a Commit
 >
-> Jennifer is collaborating on her Python script with her colleagues and
-> realizes her last commit to the group repository is wrong and wants to
-> undo it.  Jennifer needs to undo correctly so everyone in the group
-> repository gets the correct change.  `git revert [wrong commit ID]`
-> will make a new commit that undoes Jennifer's previous wrong
-> commit. Therefore `git revert` is different than `git checkout [commit
-> ID]` because `checkout` is for local changes not committed to the
-> group repository.  Below are the right steps and explanations for
-> Jennifer to use `git revert`, what is the missing command?
+> Jennifer is collaborating with colleagues on her Python script.  She
+> realizes her last commit to the project's repository contained an error, and
+> wants to undo it.  Jennifer wants to undo correctly so everyone in the project's
+> repository gets the correct change. The command `git revert [erroneous commit ID]` will create a
+> new commit that reverses the erroneous commit.
 >
-> 1. ________ # Look at the git history of the project to find the commit ID
+> The command `git revert` is
+> different from `git checkout [commit ID]` because `git checkout` returns the
+> files not yet committed within the local repository to a previous state, whereas `git revert`
+> reverses changes committed to the local and project repositories.
+>
+> Below are the right steps and explanations for Jennifer to use `git revert`,
+> what is the missing command?
+> 1. `________ # Look at the git history of the project to find the commit ID`
 >
 > 2. Copy the ID (the first few characters of the ID, e.g. 0b1d055).
 >
@@ -376,103 +436,78 @@ moving backward and forward in time becomes much easier.
 > 4. Type in the new commit message.
 >
 > 5. Save and close
+>
+>
+> > ## Solution
+> >
+> > The command `git log` lists project history with commit IDs.
+> >
+> > The command `git show HEAD` shows changes made at the latest commit, and lists
+> > the commit ID; however, Jennifer should double-check it is the correct commit, and no one
+> > else has committed changes to the repository.
+> {: .solution}
 {: .challenge}
 
 > ## Understanding Workflow and History
 >
-> What is the output of cat venus.txt at the end of this set of commands?
+> What is the output of the last command (`cat venus.txt`) in:
 >
 > ~~~
 > $ cd planets
-> $ nano venus.txt #input the following text: Venus is beautiful and full of love
+> $ echo "Venus is beautiful and full of love" > venus.txt
 > $ git add venus.txt
-> $ nano venus.txt #add the following text: Venus is too hot to be suitable as a base
+> $ echo "Venus is too hot to be suitable as a base" >> venus.txt
 > $ git commit -m "Comment on Venus as an unsuitable base"
 > $ git checkout HEAD venus.txt
 > $ cat venus.txt #this will print the contents of venus.txt to the screen
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
-> 1.
->
-> ~~~
-> Venus is too hot to be suitable as a base
-> ~~~
-> {: .output}
->
-> 2.
->
-> ~~~
-> Venus is beautiful and full of love
-> ~~~
-> {: .output}
->
-> 3.
->
-> ~~~
-> Venus is beautiful and full of love
-> Venus is too hot to be suitable as a base
-> ~~~
-> {: .output}
->
-> 4.
->
-> ~~~
-> Error because you have changed venus.txt without committing the changes
-> ~~~
-> {: .output}
+> 1. ~~~
+>    Venus is too hot to be suitable as a base
+>    ~~~
+>    {: .output}
+> 2. ~~~
+>    Venus is beautiful and full of love
+>    ~~~
+>    {: .output}
+> 3. ~~~
+>    Venus is beautiful and full of love
+>    Venus is too hot to be suitable as a base
+>    ~~~
+>    {: .output}
+> 4. ~~~
+>    Error because you have changed venus.txt without committing the changes
+>    ~~~
+>    {: .output}
 >
 > > ## Solution
 > >
-> > Line by line:
-> > ~~~
-> > $ cd planets
-> > ~~~
-> > {: .bash}
-> > Enters into the 'planets' directory
+> > The answer is 2.
 > >
-> > ~~~
-> > $ nano venus.txt #input the following text: Venus is beautiful and full of love
-> > ~~~
-> > {: .bash}
-> > We created a new file and wrote a sentence in it, but the file is not tracked by git.  
+> > The command `git add venus.txt` places the current version of `venus.txt` into the staging area.
+> > The changes to the file from the second `echo` command are only applied to the working copy,
+> > not the version in the staging area.
 > >
-> > ~~~
-> > $ git add venus.txt
-> > ~~~
-> > {: .bash}
-> > Now the file is staged. The changes that have been made to the file until now will be committed in the next commit.
+> > So, when `git commit -m "Comment on Venus as an unsuitable base"` is executed,
+> > the version of `venus.txt` committed to the repository is the one from the staging area and
+> > has only one line.
 > >
-> > ~~~
-> > $ nano venus.txt #add the following text: Venus is too hot to be suitable as a base
-> > ~~~
-> > {: .bash}
-> > The file has been modified. The new changes are not staged because we have not added the file.
+> >  At this time, the working copy still has the second line (and
+> >  `git status` will show that the file is modified). However, `git checkout HEAD venus.txt`
+> >  replaces the working copy with the most recently committed version of `venus.txt`.
 > >
+> >  So, `cat venus.txt` will output
+> >  ~~~
+> >  Venus is beautiful and full of love.
 > > ~~~
-> > $ git commit -m "Comment on Venus as an unsuitable base"
-> > ~~~
-> > {: .bash}
-> > The changes that were staged (Venus is beautiful and full of love) have been committed. The changes that were not staged (Venus is too hot to be suitable as a base) have not. Our local working copy is different than the copy in our local repository.
-> >
-> > ~~~
-> > $ git checkout HEAD venus.txt
-> > ~~~
-> > {: .bash}
-> > With checkout we discard the changes in the working directory so that our local copy is exactly the same as our HEAD, the most recent commit.
-> >
-> > ~~~
-> > $ cat venus.txt #this will print the contents of venus.txt to the screen
-> > ~~~
-> > {: .bash}
-> > If we print venus.txt we will get answer 2.
-> >
+> > {: .output}
 > {: .solution}
 {: .challenge}
 
 > ## Checking Understanding of `git diff`
 >
-> Consider this command: `git diff HEAD~3 mars.txt`. What do you predict this command
+> Consider this command: `git diff HEAD~9 mars.txt`. What do you predict this command
 > will do if you execute it? What happens when you do execute it? Why?
 >
 > Try another command, `git diff [ID] mars.txt`, where [ID] is replaced with
@@ -480,49 +515,43 @@ moving backward and forward in time becomes much easier.
 > and what does happen?
 {: .challenge}
 
-> ## Getting Rid of Staged Changes
->
-> `git checkout` can be used to restore a previous commit when unstaged changes have
-> been made, but will it also work for changes that have been staged but not committed?
-> Make a change to `mars.txt`, add that change, and use `git checkout` to see if
-> you can remove your change.
-{: .challenge}
-
 > ## Explore and Summarize Histories
 >
-> Exploring history is an important part of git, often it is a challenge to find
+> Exploring history is an important part of Git, and often it is a challenge to find
 > the right commit ID, especially if the commit is from several months ago.
 >
 > Imagine the `planets` project has more than 50 files.
-> You would like to find a commit with specific text in `mars.txt` is modified.
-> When you type `git log`, a very long list appeared,
+> You would like to find a commit that modifies some specific text in `mars.txt`.
+> When you type `git log`, a very long list appeared.
 > How can you narrow down the search?
 >
-> Recall that the `git diff` command allow us to explore one specific file,
-> e.g. `git diff mars.txt`. We can apply a similar idea here.
+> Recall that the `git diff` command allows us to explore one specific file,
+> e.g., `git diff mars.txt`. We can apply a similar idea here.
 >
 > ~~~
 > $ git log mars.txt
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
-> Unfortunately some of these commit messages are very ambiguous e.g. `update files`.
+> Unfortunately some of these commit messages are very ambiguous, e.g., `update files`.
 > How can you search through these files?
 >
-> Both `git diff` and `git log` are very useful and they summarize a different part of the history for you.
+> Both `git diff` and `git log` are very useful and they summarize a different part of the history
+> for you.
 > Is it possible to combine both? Let's try the following:
 >
 > ~~~
 > $ git log --patch mars.txt
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
-> You should get a long list of output, and you should be able to see both commit messages and the difference between each commit.
+> You should get a long list of output, and you should be able to see both commit messages and
+> the difference between each commit.
 >
 > Question: What does the following command do?
 >
 > ~~~
-> $ git log --patch HEAD~3 *.txt
+> $ git log --patch HEAD~9 *.txt
 > ~~~
-> {: .bash}
+> {: .language-bash}
 {: .challenge}
