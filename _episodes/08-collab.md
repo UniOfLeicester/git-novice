@@ -6,7 +6,8 @@ questions:
 - "How can I use version control to collaborate with other people?"
 objectives:
 - "Clone a remote repository."
-- "Collaborate pushing to a common repository."
+- "Collaborate by pushing to a common repository."
+- "Describe the basic collaborative workflow."
 keypoints:
 - "`git clone` copies a remote repository to create a local repository with a remote called `origin` automatically set up."
 ---
@@ -24,26 +25,36 @@ play Owner and Collaborator.
 > won't need to give anyone access on GitHub, because both 'partners' are you.
 {: .callout}
 
-The Owner needs to give the Collaborator access.
-On GitHub, click the settings button on the right,
-then select Collaborators, and enter your partner's username.
+The Owner needs to give the Collaborator access. On GitHub, click the settings
+button on the right, select Manage access, click Invite a collaborator, and
+then enter your partner's username.
 
 ![Adding Collaborators on GitHub](../fig/github-add-collaborators.png)
 
 To accept access to the Owner's repo, the Collaborator
-needs to go to [https://github.com/notifications](https://github.com/notifications).
-Once there she can accept access to the Owner's repo.
+needs to go to [https://github.com/notifications](https://github.com/notifications)
+or check for email notification. Once there she can accept access to the Owner's repo.
 
 Next, the Collaborator needs to download a copy of the Owner's repository to her
- machine. This is called "cloning a repo". To clone the Owner's repo into
-her `git-novice` folder, the Collaborator enters:
+machine. This is called "cloning a repo".
+
+The Collaborator doesn't want to overwrite her own version of `planets.git`, so
+needs to clone the Owner's repository to a different location than her own
+repository with the same name.
+
+To clone the Owner's repo into her `git-novice` folder, the Collaborator enters:
 
 ~~~
-$ git clone https://github.com/vlad/planets.git ~/git-novice/vlad-planets
+$ git clone git@github.com:vlad/planets.git ~/git-novice/vlad-planets
 ~~~
-{: .bash}
+{: .language-bash}
 
 Replace 'vlad' with the Owner's username.
+
+If you choose to clone without the clone path
+(`~/git-novice/vlad-planets`) specified at the end,
+you will clone inside your own planets folder!
+Make sure to navigate to the `git-novice` folder first.
 
 ![After Creating Clone of Repository](../fig/github-collaboration.svg)
 
@@ -55,7 +66,7 @@ $ cd ~/git-novice/vlad-planets
 $ nano pluto.txt
 $ cat pluto.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 It is so a planet!
@@ -66,7 +77,7 @@ It is so a planet!
 $ git add pluto.txt
 $ git commit -m "Add notes about Pluto"
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
  1 file changed, 1 insertion(+)
@@ -77,18 +88,19 @@ $ git commit -m "Add notes about Pluto"
 Then push the change to the *Owner's repository* on GitHub:
 
 ~~~
-$ git push origin master
+$ git push origin main
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
+Enumerating objects: 4, done.
 Counting objects: 4, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
 Writing objects: 100% (3/3), 306 bytes, done.
 Total 3 (delta 0), reused 0 (delta 0)
 To https://github.com/vlad/planets.git
-   9272da5..29aba7c  master -> master
+   9272da5..29aba7c  main -> main
 ~~~
 {: .output}
 
@@ -96,24 +108,58 @@ Note that we didn't have to create a remote called `origin`: Git uses this
 name by default when we clone a repository.  (This is why `origin` was a
 sensible choice earlier when we were setting up remotes by hand.)
 
-Take a look to the Owner's repository on its GitHub website now (maybe you need
-to refresh your browser.) You should be able to see the new commit made by the
-Collaborator.
+Take a look at the Owner’s repository on GitHub again, and you should be
+able to see the new commit made by the Collaborator. You may need to refresh
+your browser to see the new commit.
+
+> ## Some more about remotes
+>
+> In this episode and the previous one, our local repository has had
+> a single "remote", called `origin`. A remote is a copy of the repository
+> that is hosted somewhere else, that we can push to and pull from, and
+> there's no reason that you have to work with only one. For example,
+> on some large projects you might have your own copy in your own GitHub
+> account (you'd probably call this `origin`) and also the main "upstream"
+> project repository (let's call this `upstream` for the sake of examples).
+> You would pull from `upstream` from time to
+> time to get the latest updates that other people have committed.
+>
+> Remember that the name you give to a remote only exists locally. It's
+> an alias that you choose - whether `origin`, or `upstream`, or `fred` -
+> and not something intrinstic to the remote repository.
+>
+> The `git remote` family of commands is used to set up and alter the remotes
+> associated with a repository. Here are some of the most useful ones:
+>
+> * `git remote -v` lists all the remotes that are configured (we already used
+> this in the last episode)
+> * `git remote add [name] [url]` is used to add a new remote
+> * `git remote remove [name]` removes a remote. Note that it doesn't affect the
+> remote repository at all - it just removes the link to it from the local repo.
+> * `git remote set-url [name] [newurl]` changes the URL that is associated
+> with the remote. This is useful if it has moved, e.g. to a different GitHub
+> account, or from GitHub to a different hosting service. Or, if we made a typo when
+> adding it!
+> * `git remote rename [oldname] [newname]` changes the local alias by which a remote
+> is known - its name. For example, one could use this to change `upstream` to `fred`.
+{: .callout}
 
 To download the Collaborator's changes from GitHub, the Owner now enters:
 
 ~~~
-$ git pull origin master
+$ git pull origin main
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
-remote: Counting objects: 4, done.
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
 remote: Compressing objects: 100% (2/2), done.
-remote: Total 3 (delta 0), reused 3 (delta 0)
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
 Unpacking objects: 100% (3/3), done.
 From https://github.com/vlad/planets
- * branch            master     -> FETCH_HEAD
+ * branch            main     -> FETCH_HEAD
+   9272da5..29aba7c  main     -> origin/main
 Updating 9272da5..29aba7c
 Fast-forward
  pluto.txt | 1 +
@@ -131,10 +177,10 @@ GitHub) are back in sync.
 > repository you are collaborating on, so you should `git pull` before making
 > our changes. The basic collaborative workflow would be:
 >
-> * update your local repo with `git pull origin master`,
+> * update your local repo with `git pull origin main`,
 > * make your changes and stage them with `git add`,
 > * commit your changes with `git commit -m`, and
-> * upload the changes to GitHub with `git push origin master`
+> * upload the changes to GitHub with `git push origin main`
 >
 > It is better to make many commits with smaller changes rather than
 > of one commit with massive changes: small commits are easier to
@@ -153,19 +199,13 @@ GitHub) are back in sync.
 > command line? And on GitHub?
 >
 > > ## Solution
-> > On the command line, the Collaborator can use ```git fetch origin master```
+> > On the command line, the Collaborator can use ```git fetch origin main```
 > > to get the remote changes into the local repository, but without merging
-> > them. Then by running ```git diff master origin/master``` the Collaborator
+> > them. Then by running ```git diff main origin/main``` the Collaborator
 > > will see the changes output in the terminal.
 > >
-> > On GitHub, the Collaborator can go to their own fork of the repository and
-> > look right above the light blue latest commit bar for a gray bar saying
-> > "This branch is 1 commit behind Our-Repository:master." On the far right of
-> > that gray bar is a Compare icon and link. On the Compare page the
-> > Collaborator should change the base fork to their own repository, then click
-> > the link in the paragraph above to "compare across forks", and finally
-> > change the head fork to the main repository. This will show all the commits
-> > that are different.
+> > On GitHub, the Collaborator can go to the repository and click on
+> > "commits" to view the most recent commits pushed to the repository.
 > {: .solution}
 {: .challenge}
 
