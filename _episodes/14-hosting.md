@@ -40,10 +40,8 @@ many smaller services to the same standard.  It's also easier for people to
 collaborate.  Using a popular service can help connect your project with
 communities already using the same service.
 
-As an example, Software Carpentry [is on
-GitHub]({{ swc_github }}) where you can find the [source for this
-page]({{page.root}}/_episodes/13-hosting.md).
-Anyone with a GitHub account can suggest changes to this text.
+As an example, Software Carpentry [is on GitHub]({{ site.swc_github }}) where you can find the [source for this
+page](https://github.com/swcarpentry/git-novice/edit/gh-pages/_episodes/13-hosting.md). Anyone with a GitHub account can suggest changes to this text.
 
 GitHub repositories can also be assigned DOIs, [by connecting its releases to
 Zenodo](https://guides.github.com/activities/citable-code/). For example,
@@ -60,24 +58,12 @@ situations, there is much less setup and maintenance involved with using an
 online service.  Furthermore, such tools are often provided free of charge to
 open source projects, and are also available for private repositories for a fee.
 
-> ## University of Leicester hosting services
-> UoL IT Services are in the process of rolling out a recommended hosting solution
-> for researchers. In the first instance, we suggest using **GitHub**, with a **Researcher
-> discount** (free private repositories and Continuous Integration usage). This 
-> requires you associate your `@le.ac.uk` account with your GitHub account, then 
-> follow the instructions [here](https://help.github.com/articles/applying-for-an-academic-research-discount/)
-> . This takes a few hours to validate.
+> ## University of Leicester GitHub Organization
 >
-> You can also request to become a member of the UoL GitHub Organisation, called 
-> `UniOfLeicester` - not to be confused with university-of-leicester. This allows 
-> IT Services to help ensure code is available if you leave the University, and 
+> You can also request to become a member of the [UoL GitHub Organization](https://github.com/UniOfLeicester),
+> called `UniOfLeicester` - not to be confused with university-of-leicester. This allows
+> IT Services to help ensure code is available if you leave the University, and
 > to see how many users use GitHub and understand how best to help them.
->
-> If you have specific requirements that are not fulfilled by GitHub (e.g. you 
-> require your data to be guaranteed to be stored locally or within UK/EU, or
-> you have specific CI needs not fulfilled by Travis CI) then we suggest
-> requesting access to our **UoL-hosted GitLab service**. This is not yet available, 
-> but will hopefully be rolled out in the coming months.
 {: .callout}
 
 > ## Institutional Barriers
