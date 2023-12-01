@@ -50,7 +50,7 @@ to be shared can and should be stored in a version control system.
 > In this lesson we use Git from the Unix Shell.
 > Some previous experience with the shell is expected,
 > *but isn't mandatory*.
-> It is recommended that participants use SPECTRE, but
+> It is recommended that participants use the available Research Computing facility, but
 > can use their own computer if they have installed git
 > as required.
 {: .prereq}

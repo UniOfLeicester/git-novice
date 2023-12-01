@@ -6,13 +6,14 @@ title: Setup
 Please see [this section of the workshop template][workshop-setup]
 for instructions on installing Git.
 
-We have already installed Git as a module on SPECTRE. You can load it with `module load git/2.35.2`. We'll do our work in the `git-novice` folder so make sure you change your working directory to it with:
+We'll do our work in the `git-novice` folder, please follow the commands instructed below:
 
 ~~~
 $ cd ~
-$ module load git/2.35.2
 $ mkdir git-novice
 $ cd git-novice
+$ which git
+$ git -v
 ~~~
 {: .language-bash}
 
